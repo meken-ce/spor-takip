@@ -1,1 +1,217 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kişisel Koç</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --primary: #00ff88;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            padding-bottom: 40px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .header h1 {
+            font-size: 26px;
+            color: var(--primary);
+            margin: 0;
+            letter-spacing: 1px;
+        }
+        .header p {
+            color: var(--text-muted);
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        h2 {
+            font-size: 18px;
+            margin-top: 0;
+            border-bottom: 1px solid #333;
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        .task {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+        }
+        input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            margin-right: 15px;
+            margin-top: 2px;
+            accent-color: var(--primary);
+            flex-shrink: 0;
+        }
+        label {
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .note {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        input[type="text"] {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #2a2a2a;
+            color: #fff;
+            font-size: 15px;
+        }
+        button {
+            background-color: var(--primary);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:active {
+            opacity: 0.8;
+        }
+        .success-msg {
+            display: none;
+            color: var(--primary);
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>KİŞİSEL KOÇ</h1>
+        <p>Mehmet Eken - Fit & Duruş Takibi</p>
+    </div>
+
+    <div class="card">
+        <h2>🧑‍💻 Postür (Masa Başı)</h2>
+        <div class="task">
+            <input type="checkbox" id="posture1" class="tracker">
+            <label for="posture1">
+                Chin Tucks (Boyun Çekme)
+                <span class="note">10 Tekrar - Boyun ağrısını hafifletir.</span>
+            </label>
+        </div>
+        <div class="task">
+            <input type="checkbox" id="posture2" class="tracker">
+            <label for="posture2">
+                Wall Slides (Duvar Kaydırma)
+                <span class="note">10 Tekrar - Omuzları açar, dikleştirir.</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>⚡ Günün Antrenmanı (Üst Vücut)</h2>
+        <div class="task">
+            <input type="checkbox" id="workout1" class="tracker">
+            <label for="workout1">
+                Şınav (Push-up)
+                <span class="note">3 Set x Maksimum Tekrar</span>
+            </label>
+        </div>
+        <div class="task">
+            <input type="checkbox" id="workout2" class="tracker">
+            <label for="workout2">
+                Triceps Dips (Sandalye)
+                <span class="note">3 Set x 10-12 Tekrar</span>
+            </label>
+        </div>
+        <div class="task">
+            <input type="checkbox" id="workout3" class="tracker">
+            <label for="workout3">
+                Superman Hareketi
+                <span class="note">3 Set x 12 Tekrar (Sırt için kritik)</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>👟 Kardiyo</h2>
+        <div class="task">
+            <input type="checkbox" id="cardio" class="tracker">
+            <label for="cardio">
+                45 Dakika Tempolu Yürüyüş
+                <span class="note">Akşam yemeği öncesi veya sonrası</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🥗 Beslenme & Kalori</h2>
+        <div class="input-group">
+            <label for="lunchInput">Bugün iş yerinde öğle yemeğinde ne yedin?</label>
+            <input type="text" id="lunchInput" placeholder="Örn: 1 kase çorba, tavuk sote...">
+            <button onclick="saveData()">Günlük Verileri Kaydet</button>
+            <div id="successMsg" class="success-msg">Veriler başarıyla kaydedildi!</div>
+        </div>
+    </div>
+
+    <script>
+        // Sayfa yüklendiğinde eski verileri getir
+        document.addEventListener("DOMContentLoaded", () => {
+            const checkboxes = document.querySelectorAll('.tracker');
+            checkboxes.forEach(box => {
+                const checked = localStorage.getItem(box.id);
+                if (checked === 'true') box.checked = true;
+            });
+
+            const savedLunch = localStorage.getItem('lunchData');
+            if (savedLunch) {
+                document.getElementById('lunchInput').value = savedLunch;
+            }
+        });
+
+        // Verileri kaydetme fonksiyonu
+        function saveData() {
+            const checkboxes = document.querySelectorAll('.tracker');
+            checkboxes.forEach(box => {
+                localStorage.setItem(box.id, box.checked);
+            });
+
+            const lunchVal = document.getElementById('lunchInput').value;
+            localStorage.setItem('lunchData', lunchVal);
+
+            const msg = document.getElementById('successMsg');
+            msg.style.display = 'block';
+            setTimeout(() => { msg.style.display = 'none'; }, 3000);
+        }
+    </script>
+</body>
+</html>
 
